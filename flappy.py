@@ -3,7 +3,7 @@ import sys # We will use sys.exit to exit the program
 import pygame
 from pygame.locals import * # Basic pygame imports
 
-pygame.init()
+pygame.init()# Initialize all pygame's modules
 # Global Variables for the game
 FPS = 45
 SCREEN_WIDTH = 300
@@ -221,7 +221,7 @@ def getRandomPipe():
 
 if __name__ == "__main__":
     # This will be the main point from where our game will start
-    pygame.init() # Initialize all pygame's modules
+    pygame.init() 
     FPSCLOCK = pygame.time.Clock()
     pygame.display.set_caption('Flappy Bird by thefunnyintrovert')
     GAME_PHOTOS['numbers'] = ( 
@@ -254,6 +254,6 @@ if __name__ == "__main__":
     GAME_PHOTOS['player'] = pygame.image.load(PLAYER).convert_alpha()
 
     while True:
-        welcomeScreen() # Shows welcome screen to the user until he presses a button
+        welcomeScreen() # Shows welcome screen to the user until he presses a shown button
         mainGame() # This is the main game function 
 pygame.quit()
