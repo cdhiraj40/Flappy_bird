@@ -14,9 +14,8 @@ GROUNDY = SCREEN_HEIGHT * 0.8
 GAME_PHOTOS = {}
 GAME_SOUNDS = {}
 PLAYER = 'gallery/PHOTOS/bird.png'
-BACKGROUND = 'gallery/PHOTOS/bg_check.png'
+BACKGROUND = 'gallery/PHOTOS/background.png'
 PIPE = 'gallery/PHOTOS/pipe.png'
-GAME_FONT=pygame.font.Font('04B_19.TTF',40)
 
 
 
