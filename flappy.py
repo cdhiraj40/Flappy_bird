@@ -217,30 +217,7 @@ def getRandomPipe():
 
 
 
-# def score_display():
-#     X1 = 300
-#     Y1 = 600
-#     SCREEN.blit(GAME_PHOTOS['background'], (0, 0))
-#     font = pygame.font.SysFont(None, 35)
-#     GAME_OVER = font.render('GAME OVER ', True, (255, 0, 0))
-#     SCORE_TEXT= font.render(f'Your Score Was {score}', True, (0, 0, 0))
-#     GAME_OVER.set_alpha(127)
-#     SCORE_TEXT.set_alpha(127)
-#     SCREEN.blit(GAME_OVER, (SCREEN_WIDTH, SCREEN_HEIGHT))
-#     SCREEN.blit(GAME_OVER, (X1, Y1))
-#     textRect = GAME_OVER.get_rect()
-#     textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 3)
-#     textRect1 = SCORE_TEXT.get_rect()
-#     textRect1.center = (X1 // 2, Y1 // 3)
-#     while True:
-#         SCREEN.blit(GAME_OVER, textRect)
-#         SCREEN.blit(SCORE_TEXT, textRect1)
-#         for event in pygame.event.get():
-#             if event.type == pygame.QUIT:
 
-#                 pygame.quit()
-#                 quit()
-#         pygame.display.update()
 
 if __name__ == "__main__":
     # This will be the main point from where our game will start
