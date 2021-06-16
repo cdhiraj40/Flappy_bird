@@ -1,4 +1,4 @@
-import random # For generating random numbers
+import random 
 import sys # We will use sys.exit to exit the program
 import pygame
 from pygame.locals import * # Basic pygame imports
@@ -9,14 +9,16 @@ FPS = 45
 SCREEN_WIDTH = 300
 SCREEN_HEIGHT = 500
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
 GROUNDY = SCREEN_HEIGHT * 0.8
 GAME_PHOTOS = {}
 GAME_SOUNDS = {}
 PLAYER = 'gallery/PHOTOS/bird.png'
 BACKGROUND = 'gallery/PHOTOS/bg_check.png'
 PIPE = 'gallery/PHOTOS/pipe.png'
-SCORE=0
 GAME_FONT=pygame.font.Font('04B_19.TTF',40)
+
+
 
 def welcomeScreen():
     """
@@ -30,20 +32,20 @@ def welcomeScreen():
     while True:
         for event in pygame.event.get():
             # if user clicks on cross button, close the game
-            if event.type == QUIT or (event.type==KEYDOWN and event.key == K_ESCAPE):
+            if event.type == QUIT or (event.type==K_DOWN and event.key == K_ESCAPE):
                 pygame.quit()
                 sys.exit()
 
             # If the user presses space or up key, start the game for them
             elif event.type==KEYDOWN and (event.key==K_SPACE or event.key == K_UP):
-                return
+                return    
             else:
                 SCREEN.blit(GAME_PHOTOS['background'], (0, 0))    
                 SCREEN.blit(GAME_PHOTOS['player'], (playerx, playery))    
                 SCREEN.blit(GAME_PHOTOS['message'], (messagex,messagey ))    
                 SCREEN.blit(GAME_PHOTOS['base'], (basex, GROUNDY))    
                 pygame.display.update()
-                FPSCLOCK.tick(FPS)
+                FPSCLOCK.tick(FPS)   
 
 
 def mainGame():
@@ -80,7 +82,7 @@ def mainGame():
 
     while True:
         for event in pygame.event.get():
-            if event.type == QUIT or event.key == K_ESCAPE:
+            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN and (event.key == K_SPACE or event.key == K_UP):
@@ -92,15 +94,45 @@ def mainGame():
 
         crashTest = isCollide(playerx, playery, upperPipes, lowerPipes) # This function will return true if the player is crashed
         if crashTest:
-            score_display()
-            return         
-        # this checks for score
+            X1 = 300
+            Y1 = 600
+            X2 = 300
+            Y2 = 600
+            SCREEN.blit(GAME_PHOTOS['background'], (0, 0))
+            font = pygame.font.SysFont(None, 35)
+            GAME_OVER = font.render('GAME OVER ', True, (255, 0, 0))
+            SCORE_TEXT= font.render(f'Your Score Was {score}', True, (0, 0, 0))
+            GAME_OVER.set_alpha(127)
+            SCORE_TEXT.set_alpha(127)
+            SCREEN.blit(GAME_OVER, (SCREEN_WIDTH, SCREEN_HEIGHT))
+            SCREEN.blit(GAME_OVER, (X1, Y1))
+            textRect = GAME_OVER.get_rect()
+            textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 3)
+            textRect1 = SCORE_TEXT.get_rect()
+            textRect1.center = (X1 // 2, Y1 // 3)
+            RESTART_GAME= font.render('Press Enter to play again', True, (0, 0, 0))
+            RESTART_GAME.set_alpha(127)
+            textRect2 = RESTART_GAME.get_rect()
+            textRect2.center = (X1//2, 2*Y1//3)
+            while True:
+                SCREEN.blit(GAME_OVER, textRect)
+                SCREEN.blit(SCORE_TEXT, textRect1)
+                SCREEN.blit(RESTART_GAME, textRect2)
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_RETURN:
+                            pygame.init()
+                            welcomeScreen()
+                            mainGame()
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        quit()
+                pygame.display.update()        
         playerMidPos = playerx + GAME_PHOTOS['player'].get_width()/2
         for pipe in upperPipes:
             pipeMidPos = pipe['x'] + GAME_PHOTOS['pipe'][0].get_width()/2
             if pipeMidPos<= playerMidPos < pipeMidPos +4:
                 score +=1
-                print(f"Your score is {score}") 
                 GAME_SOUNDS['point'].play()
                 
 
@@ -168,7 +200,6 @@ def isCollide(playerx, playery, upperPipes, lowerPipes):
             return True
 
     return False
-    score_display()
 def getRandomPipe():
     """
     Generate positions of two pipes(one bottom straight and one top rotated ) for blitting on the screen
@@ -187,29 +218,30 @@ def getRandomPipe():
 
 
 
-def score_display():
-    X1 = 300
-    Y1 = 600
-    SCREEN.blit(GAME_PHOTOS['background'], (0, 0))
-    font = pygame.font.SysFont(None, 35)
-    GAME_OVER = font.render(f'GAME OVER ', True, (255, 0, 0))
-    HIGH_SCORE= font.render('Highscores', True, (0, 0, 0))
-    GAME_OVER.set_alpha(127)
-    HIGH_SCORE.set_alpha(127)
-    SCREEN.blit(GAME_OVER, (SCREEN_WIDTH, SCREEN_HEIGHT))
-    SCREEN.blit(GAME_OVER, (X1, Y1))
-    textRect = GAME_OVER.get_rect()
-    textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 3)
-    textRect1 = HIGH_SCORE.get_rect()
-    textRect1.center = (X1 // 2, Y1 // 3)
-    while True:
-        SCREEN.blit(GAME_OVER, textRect)
-        SCREEN.blit(HIGH_SCORE, textRect1)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-        pygame.display.update()
+# def score_display():
+#     X1 = 300
+#     Y1 = 600
+#     SCREEN.blit(GAME_PHOTOS['background'], (0, 0))
+#     font = pygame.font.SysFont(None, 35)
+#     GAME_OVER = font.render('GAME OVER ', True, (255, 0, 0))
+#     SCORE_TEXT= font.render(f'Your Score Was {score}', True, (0, 0, 0))
+#     GAME_OVER.set_alpha(127)
+#     SCORE_TEXT.set_alpha(127)
+#     SCREEN.blit(GAME_OVER, (SCREEN_WIDTH, SCREEN_HEIGHT))
+#     SCREEN.blit(GAME_OVER, (X1, Y1))
+#     textRect = GAME_OVER.get_rect()
+#     textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 3)
+#     textRect1 = SCORE_TEXT.get_rect()
+#     textRect1.center = (X1 // 2, Y1 // 3)
+#     while True:
+#         SCREEN.blit(GAME_OVER, textRect)
+#         SCREEN.blit(SCORE_TEXT, textRect1)
+#         for event in pygame.event.get():
+#             if event.type == pygame.QUIT:
+
+#                 pygame.quit()
+#                 quit()
+#         pygame.display.update()
 
 if __name__ == "__main__":
     # This will be the main point from where our game will start
